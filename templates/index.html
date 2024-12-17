@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Processing</title>
+</head>
+<body>
+    <h1>Image Processing Application</h1>
+    <form action="/process" method="POST" enctype="multipart/form-data">
+        <label for="file">Upload an image:</label>
+        <input type="file" name="file" id="file" accept="image/*" required>
+        <br><br>
+        <label for="method">Select a method:</label>
+        <select name="method" id="method" required>
+            <option value="linear_contrast">Linear Contrast</option>
+            <option value="histogram_hsv">Histogram Equalization (HSV)</option>
+            <option value="histogram_rgb">Histogram Equalization (RGB)</option>
+            <option value="elementwise">Elementwise Operation</option>
+        </select>
+        <br><br>
+        
+        <!-- Для поэлементных операций -->
+        <div id="elementwise-params" style="display: none;">
+            <label for="operation">Elementwise Operation:</label>
+            <select name="operation" id="operation">
+                <option value="invert">Invert</option>
+                <option value="add">Add</option>
+                <option value="subtract">Subtract</option>
+                <option value="multiply">Multiply</option>
+                <option value="divide">Divide</option>
+            </select>
+            <br><br>
+            <label for="value">Value (for Add/Subtract/Multiply/Divide):</label>
+            <input type="number" name="value" id="value" value="50">
+        </div>
+        
+        <script>
+            // Показываем параметры поэлементных операций только при выборе метода elementwise
+            document.getElementById('method').addEventListener('change', function () {
+                const params = document.getElementById('elementwise-params');
+                if (this.value === 'elementwise') {
+                    params.style.display = 'block';
+                } else {
+                    params.style.display = 'none';
+                }
+            });
+        </script>        
+        <br><br>
+        <button type="submit">Process Image</button>
+    </form>
+</body>
+</html>
